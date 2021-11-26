@@ -2,17 +2,16 @@ interface IObject {
     [propName: string]: any
 }
 
-import Exception from "../Libs/Exception"
-import Lib from "../Libs/Lib"
+import Exception from "../Libs/Exception";
+import Lib from "../Libs/Lib";
 
 /**
  * Container 容器
  * @author SunnyXu <xy@ztes.com>
  */
-
 export default class Container {
     // instance 实例
-    static instance: object = null
+    protected static instance: object = null
     // instance 实例集
     protected instances: Record<string, any> = {}
     // bind 绑定集
@@ -35,7 +34,7 @@ export default class Container {
             abstract.map((abs) => {
                 this.bind(abs, concrete);
             })
-            return;
+            return
         }
         // abstract不为字符串
         if (!Lib.isString(abstract)) {
@@ -59,7 +58,7 @@ export default class Container {
      * @param params
      * @param shared
      */
-    make(abstract: string, params: object | [], shared: boolean = false) {
+    public make(abstract: string, params: object | [], shared: boolean = false) {
         // 获取 abstract别名
         abstract = this.getAlias(abstract)
         // abstract 不存在
@@ -116,7 +115,7 @@ export default class Container {
      * has 存在标识
      * @param {String} name
      */
-    has(name: string) {
+    public has(name: string) {
         return this.binds[name] || this.instances[name] || this.getAlias(name)
     }
 
@@ -169,6 +168,5 @@ export default class Container {
             }
         })
     }
-
 
 }
