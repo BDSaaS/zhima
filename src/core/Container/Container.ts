@@ -11,15 +11,20 @@ import Lib from "../Libs/Lib"
  */
 
 export default class Container {
-
+    // instance 实例
     static instance: object = null
-    //
+    // instance 实例集
     protected instances: Record<string, any> = {}
-
+    // bind 绑定集
     protected binds: Record<string, any> = {}
     // alias 别名集
     protected aliases: Record<string, string> = {}
 
+    /**
+     * bind
+     * @param {String|Array} abstract
+     * @param {*} concrete
+     */
     public bind(abstract: string | string[], concrete) {
         // null
         if (!abstract) {
@@ -49,21 +54,70 @@ export default class Container {
     }
 
     /**
-     * make 生成 Instance
+     * make 创建类的实例/获取对象 create instance/object
      * @param abstract
      * @param params
+     * @param shared
      */
-    make(abstract: string, ...params: any) {
-        // abstract不存在
-        if (!this.instances.hasOwnProperty(abstract)) {
+    make(abstract: string, params: object | [], shared: boolean = false) {
+        // 获取 abstract别名
+        abstract = this.getAlias(abstract)
+        // abstract 不存在
+        if (!this.binds.hasOwnProperty(abstract)) {
             throw new Exception('Container Error', 'The abstract does not exist')
         }
-        const instance = this.instances[abstract]
-        if (Lib.isClass(instance)) {
-            this.bind(abstract, new instance(...params))
-        } else {
-            throw new Exception('Container Error', 'The abstract is not class')
+        // executor 待执行
+        let executor = this.binds[abstract]
+        // executor 处理
+        if (Lib.isClass(executor)) {
+            return this.makeClass(abstract, executor, params, shared)
+        } else if (Lib.isFunction(executor)) {
+            return this.makeFunc(abstract, executor, params, shared)
         }
+        return executor
+    }
+
+    /**
+     * makeClass 创建类
+     * @param name
+     * @param executor
+     * @param params
+     * @param shared
+     */
+    protected makeClass(name, executor, params: object | [], shared: boolean = false) {
+        const func = () => {
+            return new executor(params)
+        }
+        if (shared) {
+            this.bind(name, func)
+            return this.instances[name]
+        }
+        return func
+    }
+
+    /**
+     * makeFunc 创建函数
+     * @param name
+     * @param executor
+     * @param params
+     * @param shared
+     * @protected
+     */
+    protected makeFunc(name, executor, params, shared: boolean = false) {
+        const func = executor(params)
+        if (shared) {
+            this.bind(name, func)
+            return this.instances[name]
+        }
+        return func
+    }
+
+    /**
+     * has 存在标识
+     * @param {String} name
+     */
+    has(name: string) {
+        return this.binds[name] || this.instances[name] || this.getAlias(name)
     }
 
     /**
@@ -80,20 +134,20 @@ export default class Container {
      * @param abstract
      * @param concrete
      */
-    singleton(abstract, concrete) {
+    singleton(abstract, concrete): void {
         this.bind(abstract, concrete)
     }
 
     /**
-     * 设置实例
+     * setInstance 设置实例
      * @param {Record<string, any>} instance
      */
-    public setInstance(instance: object) {
+    public setInstance(instance: object): void {
         Container.instance = instance;
     }
 
     /**
-     * 获取实例
+     * getInstance 获取实例
      *
      */
     public getInstance(): object {
@@ -105,7 +159,7 @@ export default class Container {
     }
 
     /**
-     * 获取代理实例
+     * proxyInstance 代理实例
      * @protected
      */
     protected proxyInstance() {
