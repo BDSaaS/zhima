@@ -16,7 +16,7 @@ export default class Application extends Container {
     // Services
     protected services: [] = []
     // Lifecycle
-    protected steps = null
+    protected steps = 'init'
 
     /**
      * Get version 版本
@@ -27,7 +27,29 @@ export default class Application extends Container {
     }
 
     private lifecycle() {
-        return {}
+        return {
+            beforeCreate: () => {
+                if (this.steps === 'init') {
+
+                    this.steps = 'beforeCreate'
+                }
+            },
+            created: () => {
+                this.steps = 'created'
+            },
+            beforeMount: () => {
+                this.steps = 'beforeMount'
+            },
+            mounted: () => {
+                this.steps = 'mounted'
+            },
+            beforeUnmount: () => {
+                this.steps = 'beforeUnmount'
+            },
+            unmounted: () => {
+                this.steps = 'unmounted'
+            }
+        }
     }
 
     /**
