@@ -15,7 +15,7 @@ export default class Container {
     // instance 实例集
     protected instances: Record<string, any> = {}
     // bind 绑定集
-    protected binds: Record<string, any> = {}
+    protected bindings: Record<string, any> = {}
     // alias 别名集
     protected aliases: Record<string, string> = {}
 
@@ -42,9 +42,9 @@ export default class Container {
         }
         // concrete类型
         if (Lib.isObject(concrete) || Lib.isClass(concrete)) {
-            this.instances[abstract] = concrete
+            this.bindings[abstract] = concrete
         } else if (Lib.isFunction(concrete) && !Lib.isClass(concrete)) {
-            this.binds[abstract] = concrete
+            this.instances[abstract] = concrete
         }
     }
 
@@ -62,11 +62,11 @@ export default class Container {
         // 获取 abstract别名
         abstract = this.getAlias(abstract)
         // abstract 不存在
-        if (!this.binds.hasOwnProperty(abstract)) {
+        if (!this.has(abstract)) {
             throw new Exception('Container Error', 'The abstract does not exist')
         }
         // executor 待执行
-        let executor = this.binds[abstract]
+        let executor = this.bindings[abstract]
         // executor 处理
         if (Lib.isClass(executor)) {
             return this.makeClass(abstract, executor, params, shared)
@@ -74,6 +74,20 @@ export default class Container {
             return this.makeFunc(abstract, executor, params, shared)
         }
         return executor
+    }
+
+    /**
+     * instance 实例
+     * @param {String} abstract
+     * @param instance
+     */
+    instance(abstract: string, instance) {
+        // 存在标记
+        const has = this.has(abstract)
+        if (has) {
+            delete this.instances[abstract]
+        }
+        this.instances[abstract] = instance
     }
 
     /**
@@ -112,11 +126,19 @@ export default class Container {
     }
 
     /**
-     * has 存在标识
+     * has as existence
      * @param {String} name
      */
     public has(name: string) {
-        return !this.binds[name] || !this.instances[name] || !this.getAlias(name)
+        return this.existence(name)
+    }
+
+    /**
+     * existence 存在标识
+     * @param {String} name
+     */
+    public existence(name: string) {
+        return !this.bindings[name] || !this.instances[name] || !this.getAlias(name)
     }
 
     /**
@@ -144,7 +166,7 @@ export default class Container {
      * @param abstract
      * @param concrete
      */
-    singleton(abstract, concrete): void {
+    public singleton(abstract, concrete): void {
         this.bind(abstract, concrete)
     }
 
@@ -170,9 +192,9 @@ export default class Container {
 
     /**
      * proxyInstance 代理实例
-     * @protected
+     *
      */
-    protected proxyInstance() {
+    protected proxyInstance(): object {
         return new Proxy(this, {
             get: (target, propKey) => {
                 return target[propKey];
