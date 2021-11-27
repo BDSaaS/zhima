@@ -58,7 +58,7 @@ export default class Container {
      * @param params
      * @param shared
      */
-    public make(abstract: string, params: object | [], shared: boolean = false) {
+    public make(abstract: string, params?: object | [], shared: boolean = false) {
         // 获取 abstract别名
         abstract = this.getAlias(abstract)
         // abstract 不存在
@@ -116,7 +116,7 @@ export default class Container {
      * @param {String} name
      */
     public has(name: string) {
-        return this.binds[name] || this.instances[name] || this.getAlias(name)
+        return !this.binds[name] || !this.instances[name] || !this.getAlias(name)
     }
 
     /**
@@ -126,6 +126,17 @@ export default class Container {
     getAlias(abstract) {
         const alias = this.aliases[abstract]
         return alias ? alias : abstract
+    }
+
+    /**
+     * get 获取实例
+     * @param abstract
+     */
+    public get(abstract) {
+        if (!this.has(abstract)) {
+            throw new Exception('Container Error', 'The abstract does not exist')
+        }
+        return this.make(abstract)
     }
 
     /**

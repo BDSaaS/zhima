@@ -33,12 +33,29 @@ export default class Application extends Container {
      */
     public config(config: {}, name: string = '$config'): void {
         // bind
-        this.bind(name, config)
+        this.singleton(name, config)
+    }
+
+    /**
+     * getConfig 获取配置项
+     * @param name
+     * @param {Object} def 默认值
+     */
+    public getConfig(name, def?: object) {
+        if (!this.has(name)) {
+            if (def) {
+                return def
+            }
+            throw new Exception('Config Error', 'Configuration information does not exist')
+        }
+        return this.get(name)
     }
 
     public setAdapter() {
 
     }
+
+
 
 
     public run() {
