@@ -19,11 +19,11 @@ interface IException {
  */
 export default class Exception extends Error implements IException {
     // 错误名称
-    public name = 'Error';
+    public name: string = 'Error';
     // 错误信息
-    public message = 'Error message';
+    public message: string = 'Error message';
     // 错误码
-    public code = 500;
+    public code: number = 500;
 
     /**
      *
