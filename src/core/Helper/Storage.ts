@@ -1,8 +1,10 @@
 // Lib
 import Lib from "../Libs/Lib";
+// Exception
 import Exception from "../Libs/Exception";
 // Type
 import {IObject} from "../Type/Interface";
+
 // Event function for storage
 function storageEventListener(event) {
     return event
@@ -15,6 +17,10 @@ function storageEventListener(event) {
 export default class Storage {
     public static storage = localStorage
 
+    /**
+     * get get|getAll storage
+     * @param key
+     */
     public static get(key?: string) {
         if (!key) {
             return Storage.getAll()
@@ -33,7 +39,7 @@ export default class Storage {
 
     }
 
-    public static clear(name?: string) {
+    public static clear() {
 
     }
 

@@ -3,7 +3,8 @@ import Exception from "./Libs/Exception";
 import Lib from "./Libs/Lib";
 
 /**
- * Application 核心入口
+ * Application 核心应用
+ * @extends Container
  * @author SunnyXu <xy@ztes.com>
  */
 export default class Application extends Container {

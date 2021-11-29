@@ -8,6 +8,10 @@ import Storage from "./Storage";
 import Service from "../Service/Service";
 import Lib from "../Libs/Lib";
 
+/**
+ * Class Helper
+ * @extends Service
+ */
 export default class Helper extends Service {
     public env() {
 
@@ -24,6 +28,8 @@ export default class Helper extends Service {
     public session() {
 
     }
+
+    
 
     public async http(api, data, handle) {
         try {

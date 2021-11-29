@@ -1,17 +1,44 @@
 import {IObject} from "../Type/Interface";
 
 export default class Service {
-    protected instance: IObject = {}
+    // instance
+    private instance: IObject = {}
+    // payload
+    private payload: any = null
 
-    constructor(app) {
-        this.setInstance(app)
+    constructor(instance, payload) {
+        this.setInstance(instance)
+        this.setPayload(payload)
     }
 
+    /**
+     * setInstance
+     * @param instance
+     */
     setInstance(instance) {
         this.instance = instance
     }
 
+    /**
+     * setPayload
+     * @param payload
+     */
+    setPayload(payload) {
+        this.payload = payload
+    }
+
+    /**
+     * Get app instance
+     * this.app
+     */
     get app() {
         return this.instance
+    }
+
+    /**
+     * Get args payload
+     */
+    get args() {
+        return this.payload
     }
 }

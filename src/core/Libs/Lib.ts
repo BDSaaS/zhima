@@ -3,7 +3,7 @@ export default class Lib {
      * typeOf 类型
      * @param {*} value
      */
-    static typeOf(value): string {
+    public static typeOf(value): string {
         return typeof value;
     }
 
@@ -11,7 +11,7 @@ export default class Lib {
      * getTag 处理类型
      * @param {*} value
      */
-    static getTag(value): string {
+    public static getTag(value): string {
         return Object.prototype.toString.call(value);
     }
 
@@ -19,7 +19,7 @@ export default class Lib {
      * isFunction 是否函数
      * @param {Function} value
      */
-    static isFunction(value): boolean {
+    public static isFunction(value): boolean {
         return Lib.typeOf(value) === 'function' && Lib.getTag(value) == '[object Function]';
     }
 
@@ -27,7 +27,7 @@ export default class Lib {
      * isString 是否字符串
      * @param {String} value
      */
-    static isString(value: string): boolean {
+    public static isString(value: string): boolean {
         return Lib.typeOf(value) === 'string' || (Lib.typeOf(value) === 'object' && value != null && !Array.isArray(value) && Lib.getTag(value) == '[object String]');
     }
 
@@ -35,7 +35,7 @@ export default class Lib {
      * isObject 是否对象
      * @param {Object} value
      */
-    static isObject(value: object): boolean {
+    public static isObject(value: object): boolean {
         return Lib.getTag(value) === '[object Object]';
     }
 
@@ -43,7 +43,7 @@ export default class Lib {
      * isClass 是否类
      * @param value
      */
-    static isClass(value): boolean {
+    public static isClass(value): boolean {
         // isFunction
         if (!Lib.isFunction(value)) {
             return false;
