@@ -97,7 +97,7 @@ export default class Container {
      * @param params
      * @param shared
      */
-    protected makeClass(name, executor, params: object | [], shared: boolean = false) {
+    protected makeClass(name, executor, params: object | any[], shared: boolean = false) {
         const func = () => {
             return new executor(params)
         }
@@ -116,7 +116,7 @@ export default class Container {
      * @param shared
      * @protected
      */
-    protected makeFunc(name, executor, params, shared: boolean = false) {
+    protected makeFunc(name: string, executor, params, shared: boolean = false) {
         const func = executor(params)
         if (shared) {
             this.bind(name, func)
