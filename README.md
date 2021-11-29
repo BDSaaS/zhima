@@ -1,6 +1,6 @@
 # ZhiMa Framework
 
-> 芝麻框架 - 芝麻虽小，点滴积累
+> 芝麻框架⭐ - 芝麻是数企前端容器框架，芝麻虽小点点滴滴积少成多。
 
 DzTransform 是能够优雅解决 `Cannot read properties of undefined (reading 'name')` 等诸如此类问题的一款超轻量的 npm 模块包。它支持以下功能：
 
