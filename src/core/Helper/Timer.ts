@@ -55,6 +55,7 @@ export default class Timer {
         // Waiting to run
         if (timer && timer.status === 'Waiting' || 'Paused' || 'Closed') {
             timer.status = 'Running'
+            // 运行
             timer.id = this.mode === 'setTimeout' || 'Timeout' ? this.setTimeout(timer.callback, timer.executionTime) : this.setInterval(timer.callback, timer.executionTime)
             this.updateTimer(timer)
             return
@@ -87,7 +88,7 @@ export default class Timer {
 
     /**
      * close
-     * Close timer
+     * Close timer 关闭定时器
      * @param name
      * @param status
      */
@@ -111,21 +112,67 @@ export default class Timer {
         }
     }
 
-    public pause(name: string | string[]) {
-
-    }
-
-    public clear() {
-
-    }
-
-    public join() {
+    /**
+     * pause
+     * Pause timer 暂停定时器
+     * @param name
+     */
+    public pause(name?: string | string[]) {
+        if (!name) {
+            this.queue.map((timer) => {
+                this.pause(timer.name)
+            })
+        } else if (Array.isArray(name)) {
+            name.map((n) => {
+                this.pause(n)
+            })
+        } else {
+            const timer = this.has(name)
+            if (timer && timer.status === 'Running') {
+                this.close(name, 'Paused')
+            }
+        }
 
     }
 
     /**
+     * clear
+     * 清除定时器和对列
+     * @param name
+     */
+    public clear(name?: string | string[]) {
+        if (!name) {
+            this.queue.map((timer) => {
+                this.clear(timer.name)
+            })
+        } else if (Array.isArray(name)) {
+            name.map((n) => {
+                this.clear(n)
+            })
+        } else {
+            const timer = this.has(name)
+            // 运行中
+            if (timer && timer.status === 'Running') {
+                this.close(name)
+            }
+            this.remove(name)
+        }
+    }
+
+    /**
+     * join
+     * As add
+     * @param name
+     * @param time
+     * @param callback
+     */
+    public join(name: string, time: number, callback) {
+        return this.add(name, time, callback)
+    }
+
+    /**
      * add
-     * Add timer
+     * Add timer to the queue 添加一个定时器到对列
      * @param name
      * @param time
      * @param callback
@@ -138,8 +185,29 @@ export default class Timer {
         return this
     }
 
-    public remove(name: string | string[]) {
-
+    /**
+     * remove
+     * Remove queue's timer 从对列移除一个定时器
+     * @param name
+     */
+    public remove(name?: string | string[]) {
+        if (!name) {
+            this.setQueue([])
+        } else if (Array.isArray(name)) {
+            name.map(n => {
+                this.remove(n)
+            })
+        } else {
+            const timer = this.has(name)
+            if (timer && timer.status !== 'Running') {
+                const queue = this.queue.filter(t => {
+                    return name !== t.name
+                })
+                this.setQueue(queue)
+            } else if (timer && timer.status === 'Running') {
+                this.close(name)
+            }
+        }
     }
 
     /**
