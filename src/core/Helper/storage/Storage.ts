@@ -1,7 +1,7 @@
 type StorageValue = string | number | Record<string, any> | Array<any>
 type GetStorageValue = string | Record<string, string>
 
-class StorageTest {
+class BDStorage {
     private readonly _storage: Storage
 
     constructor(storage: Storage) {
@@ -43,7 +43,7 @@ class StorageTest {
     }
 }
 
-const storage = new StorageTest(localStorage)
+const storage = new BDStorage(localStorage)
 
 storage.set('info', {name: 'bob', age: 18})
 storage.set('age', 18)
