@@ -1,9 +1,8 @@
+import Exception from "../Libs/Exception";
 /**
  * Timer status
  * 'Waiting' 等待/尚未执行 | 'Running' 执行中 | 'Paused' 已暂停 | 'Closed' 已关闭 | 'Undefined' 尚未定义
  */
-import Exception from "../Libs/Exception";
-
 type Status = 'Waiting' | 'Running' | 'Paused' | 'Closed' | 'Undefined'
 // Timer Mode
 type Mode = 'setInterval' | 'setTimeout' | 'Interval' | 'Timeout'
@@ -25,12 +24,11 @@ interface InterfaceTimer {
  */
 
 export default class Timer {
-    // instance
+    // instance 实例
     protected static instance: object = null
     // queue 执行队列
     private queue: InterfaceTimer[] = []
-    // // waitingQueue
-    // private waitingQueue: InterfaceTimer[] = []
+    // mode 定时器模式
     private mode: Mode = 'setInterval'
 
     /**
@@ -40,7 +38,7 @@ export default class Timer {
      * @param time
      * @param callback
      */
-    dispatch(name: string, time: number, callback) {
+    public dispatch(name: string, time: number, callback) {
         this.add(name, time, callback).run(name)
         this.mode = 'setInterval'
     }
@@ -50,7 +48,7 @@ export default class Timer {
      * Run timer
      * @param name Timer name
      */
-    run(name: string) {
+    public run(name: string) {
         const timer = this.has(name)
         // Waiting to run
         if (timer && timer.status === 'Waiting' || 'Paused' || 'Closed') {
@@ -72,7 +70,7 @@ export default class Timer {
      * @param callback
      * @param time
      */
-    setInterval(callback, time: number): number {
+    public setInterval(callback, time: number): number {
         return setInterval(callback, time)
     }
 
@@ -82,7 +80,7 @@ export default class Timer {
      * @param time
      * @return number
      */
-    setTimeout(callback, time: number): number {
+    public setTimeout(callback, time: number): number {
         return setTimeout(callback, time)
     }
 
@@ -161,7 +159,7 @@ export default class Timer {
 
     /**
      * join
-     * As add
+     * As add add方法别名
      * @param name
      * @param time
      * @param callback
