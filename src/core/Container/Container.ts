@@ -6,7 +6,8 @@ import Exception from "../Libs/Exception";
 import Lib from "../Libs/Lib";
 
 /**
- * Container 容器
+ * Class Container
+ * 容器类
  * @author SunnyXu <xy@ztes.com>
  */
 export default class Container {

@@ -10,11 +10,19 @@ type Mode = 'setInterval' | 'setTimeout' | 'Interval' | 'Timeout'
 
 interface InterfaceTimer {
     name: string
+    mode: Mode
     id: number | null
     executionTime: number
     status: Status
     callback
 }
+
+/**
+ * Class Timer
+ * 定时器
+ * @example TimerInstance.setMode('setTimeout').dispatch('yu-ying.recall',5000,()=>{}) setMode 设置模式 setInterval 分发 dispatch
+ * @author SunnyXu <xy@ztes.com>
+ */
 
 export default class Timer {
     // instance
@@ -34,6 +42,7 @@ export default class Timer {
      */
     dispatch(name: string, time: number, callback) {
         this.add(name, time, callback).run(name)
+        this.mode = 'setInterval'
     }
 
     /**
@@ -57,16 +66,49 @@ export default class Timer {
         throw new Exception('TimerError', 'Please do not run a timer that has not been defined')
     }
 
+    /**
+     * setInterval
+     * @param callback
+     * @param time
+     */
     setInterval(callback, time: number): number {
         return setInterval(callback, time)
     }
 
+    /**
+     * setTimeout
+     * @param callback
+     * @param time
+     * @return number
+     */
     setTimeout(callback, time: number): number {
         return setTimeout(callback, time)
     }
 
-    public close(name: string | string[]) {
-
+    /**
+     * close
+     * Close timer
+     * @param name
+     * @param status
+     */
+    public close(name: string | string[], status: Status = 'Closed') {
+        if (Array.isArray(name)) {
+            name.map((t) => {
+                this.close(t)
+            })
+        } else {
+            const timer = this.has(name)
+            if (timer) {
+                if (timer.mode === 'setTimeout') {
+                    clearTimeout(timer.id)
+                } else if (timer.mode === 'setInterval') {
+                    clearInterval(timer.id)
+                }
+                timer.status = status
+                // Update
+                this.updateTimer(timer)
+            }
+        }
     }
 
     public pause(name: string | string[]) {
@@ -110,6 +152,7 @@ export default class Timer {
     private setTimer(name: string, time: number, callback) {
         this.queue.push({
             name,
+            mode: this.mode,
             id: null,
             executionTime: time,
             status: 'Waiting',
@@ -140,6 +183,15 @@ export default class Timer {
      */
     private setQueue(queue: InterfaceTimer[]) {
         this.queue = queue
+    }
+
+    /**
+     * setMode
+     * @param mode
+     */
+    public setMode(mode: Mode) {
+        this.mode = mode
+        return this
     }
 
     /**
