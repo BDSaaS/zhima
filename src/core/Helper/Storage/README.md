@@ -1,8 +1,16 @@
+- [x] set：可传入普通值，对象及数组 <br>
+- [x] get：不传参，获取所有 key 对应的值，包装成对象 <br>
+- [x] delete：可传数组，删一串 <br>
+- [x] clear：删除所有 <br>
+- [x] keys：返回所有 key，返回 array <br>
+- [x] getAll：获取所有 key 对应的值，包装成对象
+
+
 type StorageValue = string | number | Record<string, any> | Array<any>
 type GetStorageValue = string | Record<string, string>
 
-class BDStorage {
-    private readonly _storage: Storage
+class LocalStorage {
+private readonly _storage: Storage
 
     constructor(storage: Storage) {
         this._storage = storage
@@ -42,19 +50,3 @@ class BDStorage {
         return other
     }
 }
-
-const storage = new BDStorage(localStorage)
-
-storage.set('info', {name: 'bob', age: 18})
-storage.set('age', 18)
-storage.set('name', 'bob')
-
-console.log(storage);
-console.log(storage.get('name'));
-console.log(storage.instance)
-console.log(storage.keys)
-console.log(storage.getAll)
-storage.delete('info')
-storage.delete(['age'])
-console.log(storage.get());
-storage.clear()
