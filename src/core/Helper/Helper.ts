@@ -4,7 +4,7 @@
  */
 import {IObject} from "../Type/Interface";
 import Exception from "../Libs/Exception";
-import Storage from "./Storage";
+import WebStorage from "./Storage/WebStorage"
 import Service from "../Service/Service";
 import Lib from "../Libs/Lib";
 
@@ -29,7 +29,6 @@ export default class Helper extends Service {
 
     }
 
-    
 
     public async http(api, data, handle) {
         try {

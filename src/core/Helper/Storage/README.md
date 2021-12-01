@@ -6,6 +6,7 @@
 - [x] getAll：获取所有 key 对应的值，包装成对象
 
 
+```typescript
 type StorageValue = string | number | Record<string, any> | Array<any>
 type GetStorageValue = string | Record<string, string>
 
@@ -50,3 +51,4 @@ private readonly _storage: Storage
         return other
     }
 }
+```
