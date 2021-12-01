@@ -6,23 +6,16 @@ type StorageValue = string | number | Record<string, any> | Array<any>
 type GetStorageValue = string | Record<string, string>
 
 interface IFunction {
-    (event:IObject,callback): void
+    (event: IObject, callback): void
 }
 
-// Event function for storage
-// let storageEventListener: IFunction
-// storageEventListener = function (event, callback): void {
-//     callback(event)
-// }
+type Type = 'localStorage' | 'sessionStorage'
 
-// Add event listener
-// window.addEventListener('storage', storageEventListener)
-
-class SessionStorage {
-
-    public static storage = localStorage
-
-    // public static event = storageEventListener
+class Storage {
+    // type 存储类型
+    public static type: Type = 'localStorage'
+    // storage 存储接口
+    public static storage = Storage.type === 'localStorage' ? localStorage : sessionStorage
 
     /**
      * get get|getAll storage
@@ -30,12 +23,12 @@ class SessionStorage {
      */
     public static get(key?: string) {
         if (!key) {
-            return SessionStorage.getAll()
+            return Storage.getAll()
         }
         if (!Lib.isString(key)) {
             throw new Exception('', 'The first parameter is a string')
         }
-        return SessionStorage.storage.getItem(key)
+        return Storage.storage.getItem(key)
     }
 
     public static set(key: string, value: string | any[] | IObject) {
