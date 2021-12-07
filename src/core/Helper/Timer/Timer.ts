@@ -1,4 +1,5 @@
 import Exception from "../../Libs/Exception";
+
 /**
  * Timer status
  * 'Waiting' 等待/尚未执行 | 'Running' 执行中 | 'Paused' 已暂停 | 'Closed' 已关闭 | 'Undefined' 尚未定义
@@ -130,7 +131,6 @@ export default class Timer {
                 this.close(name, 'Paused')
             }
         }
-
     }
 
     /**

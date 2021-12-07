@@ -3,17 +3,13 @@
  * 代理服务
  */
 export default class Agent {
-    protected static proxy = null
+    protected static agent = null
 
     set() {
 
     }
 
-    get instance() {
-        if (Agent.proxy) {
-            return Agent.proxy
-        }
-        this.set()
-        return Agent.proxy
+    public static instance() {
+
     }
 }
