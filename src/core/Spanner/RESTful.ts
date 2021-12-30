@@ -81,8 +81,8 @@ export default class RESTful {
                 defaultValue[arg] = null
             }
         })
-        // // Assign uri data
-        // const _parameters = Object.assign(defaultValue, restParameters)
+        // Assign uri data
+        const _parameters = Object.assign(defaultValue, restParameters)
         // //
         // let uri = this.data.uri;
         // _parameters.map((parameter)=>{

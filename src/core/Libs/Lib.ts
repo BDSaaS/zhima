@@ -20,7 +20,7 @@ export default class Lib {
      * @param {Function} value
      */
     public static isFunction(value): boolean {
-        return Lib.typeOf(value) === 'function' && Lib.getTag(value) == '[object Function]';
+        return Lib.typeOf(value) === 'function' && Lib.getTag(value) === '[object Function]';
     }
 
     /**

@@ -185,7 +185,7 @@ export default class Container {
      */
     public getInstance(): object {
         let instance: Record<string, any> = Container.instance;
-        if (!instance) {
+        if (!instance || !(instance instanceof Container)) {
             instance = Container.instance = new Container();
         }
         return instance.proxyInstance();
