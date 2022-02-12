@@ -1,11 +1,23 @@
+import {Lib} from "../index";
+
 export default class Transformer {
+    private data: string | Record<any, any>
+    private payload: string | Record<any, any>
 
-    constructor(data) {
-
+    /**
+     * Constructor
+     * @param {String|Object|Array} data
+     * @param {Object} payload
+     */
+    constructor(data, payload) {
+        // Data
+        this.data = data
+        // Payload
+        this.payload = payload
     }
 
     /**
-     * new Transformer.create([{}],(data)=>{
+     * new class Transformer.create([{}],(data)=>{
      *     return {
      *         name:data.name1,
      *         age:data.age,
@@ -14,21 +26,27 @@ export default class Transformer {
      * })
      * 处理简单数据
      * @param data
+     * @param callback {Function}
      */
-    public static create(data, callback) {
-
+    public static create(data, callback: Function) {
+        // Callback is Function
+        if (data && Lib.isFunction(callback)) {
+            this.transform(data, callback)
+        }
+        return data
     }
 
-    public handle(data) {
+    /**
+     * 转换方法
+     * @param data
+     * @param transform
+     */
+    public static transform(data, transform: Function) {
         if (Array.isArray(data)) {
             return data.map((item) => {
-                return Transformer.transform(item)
+                return transform(item)
             })
         }
-        return Transformer.transform(data)
-    }
-
-    public static transform(data) {
-        return data
+        return transform(data)
     }
 }

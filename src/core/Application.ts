@@ -66,7 +66,7 @@ export default class Application extends Container {
      * setProviders 设置
      * @param providers
      */
-    setProviders(providers: []) {
+    setProviders(providers: any[]) {
         const instanceProviders = Application.getInstance().providers
         if (Array.isArray(instanceProviders)) {
             Application.getInstance().providers = instanceProviders.filter((instanceProvider) => {
@@ -84,7 +84,7 @@ export default class Application extends Container {
      * @param provider
      * @param payload
      */
-    public registerProvider(provider, payload?: {}) {
+    public registerProvider(provider, payload?: Record<any, any>) {
         if (!Lib.isClass(provider)) {
             throw new Exception('Provider Error', 'The first argument must be a class')
         }
