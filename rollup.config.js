@@ -7,13 +7,11 @@ import ts from 'rollup-plugin-typescript2'
 const getPath = _path => path.resolve(__dirname, _path)
 import packageJSON from './package.json'
 
-
 const extensions = [
     '.js',
     '.ts',
     '.tsx'
 ]
-
 
 // ts
 const tsPlugin = ts({
@@ -21,14 +19,12 @@ const tsPlugin = ts({
     extensions
 })
 
-
 // eslint
 const esPlugin = eslint({
     throwOnError: true,
     include: ['src/**/*.ts'],
     exclude: ['node_modules/**', 'lib/**']
 })
-
 
 // 基础配置
 const commonConf = {
@@ -40,6 +36,7 @@ const commonConf = {
         tsPlugin,
     ]
 }
+
 // 需要导出的模块类型
 const outputMap = [
     {

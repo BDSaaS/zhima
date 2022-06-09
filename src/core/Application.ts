@@ -2,6 +2,10 @@ import Container from "./Container/Container";
 import Exception from "./Libs/Exception";
 import Lib from "./Libs/Lib";
 
+interface Instance {
+    getInstance: Instance
+}
+
 /**
  * Application 核心应用
  * @extends Container
@@ -13,7 +17,7 @@ export default class Application extends Container {
     // Adapters
     protected adapters = new WeakMap()
     // Providers
-    protected providers: [] = []
+    protected providers: any[] = []
     // Services
     protected services: [] = []
     // Lifecycle step
@@ -27,26 +31,23 @@ export default class Application extends Container {
         return Application.VERSION
     }
 
-    private lifecycle() {
+    private lifecycle(): any {
         return {
-            beforeCreate: () => {
+            // create
+            create: () => {
                 if (this.step === 'init') {
-
                     this.step = 'beforeCreate'
                 }
             },
+            // created
             created: () => {
                 this.step = 'created'
             },
-            beforeMount: () => {
-                this.step = 'beforeMount'
-            },
+            // mounted
             mounted: () => {
                 this.step = 'mounted'
             },
-            beforeUnmount: () => {
-                this.step = 'beforeUnmount'
-            },
+            // unmounted
             unmounted: () => {
                 this.step = 'unmounted'
             }
@@ -57,7 +58,7 @@ export default class Application extends Container {
      * getProviders 获取
      * @protected
      */
-    protected getProviders() {
+    protected getProviders(): any[] {
         const providers = Application.getInstance().providers
         return Array.isArray(providers) && providers.length > 0 ? providers : []
     }
@@ -66,8 +67,10 @@ export default class Application extends Container {
      * setProviders 设置
      * @param providers
      */
-    setProviders(providers: any[]) {
+    setProviders<T>(providers: T[]): void {
         const instanceProviders = Application.getInstance().providers
+    :
+        T[]
         if (Array.isArray(instanceProviders)) {
             Application.getInstance().providers = instanceProviders.filter((instanceProvider) => {
                 const hasProvider = providers.find((provider) => {

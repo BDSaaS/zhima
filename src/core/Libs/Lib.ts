@@ -1,3 +1,15 @@
+interface Person{
+    name: string
+    age: number
+}
+
+type Par<T> = {
+    [K in keyof T]?: T[K]
+}
+
+type PersonOptional = Partial<Person>
+type PersonReadonly = Readonly<Person>
+
 export default class Lib {
     /**
      * typeOf 类型

@@ -1,10 +1,3 @@
-interface IException {
-    name: string;
-    message: string;
-    code?: number
-
-}
-
 /**
  * Exception Class
  * 目前原生的错误类型
@@ -17,7 +10,7 @@ interface IException {
  * EvalError [eval函数没有正确执行]
  * Example: throw new Exception() catch(error) error.name,error.message,error.code,error.stack
  */
-export default class Exception extends Error implements IException {
+export default class Exception extends Error {
     // 错误名称
     public name: string = 'Error';
     // 错误信息
@@ -31,7 +24,7 @@ export default class Exception extends Error implements IException {
      * @param {String} message 错误提示
      * @param {Number} code 错误码
      */
-    constructor(name: string, message: string, code?: number) {
+    constructor(name: string, message: string, code: number = 500) {
         super(message);
         this.name = name ?? 'Error';
         this.message = message ?? 'Error message';

@@ -2,7 +2,7 @@
   "name": "zhima",
   "version": "1.0.0",
   "description": "ZhiMa Framework",
-  "main": "core/index.js",
+  "main": "dist/index.js",
   "typings": "./index.d.ts",
   "repository": {
     "type": "git",

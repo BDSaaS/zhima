@@ -43,7 +43,7 @@ export default class RESTful {
     }
 
     private get checkUri() {
-        const check = this.data.uri.match(/\<(.*?)\>/g)
+        const check = this.data.uri.match(/<(.*?)>/g)
         return {
             status: !!check,
             data: check
@@ -59,11 +59,11 @@ export default class RESTful {
         const remainingParameters = {}
         keys.map((key) => {
             // 是否包含__字符，包含__字符的为RESTful指定替换参数
-            const isMatch = key.match(/^\_\_/g)
+            const isMatch = key.match(/^__/g)
             // isMatch 处理data里数据
             if (isMatch) {
                 // 将__字符替换
-                let newKey = key.replace(/^\_\_/g, "");
+                let newKey = key.replace(/^__/g, "");
                 restParameters[newKey] = this.data[key]
             } else {
                 remainingParameters[key] = this.data[key]
@@ -73,7 +73,7 @@ export default class RESTful {
         const defaultValue = {}
         // Default val
         const uriData = this.checkUri.data.map((arg) => {
-            let str = arg.replace(/(^\<)|(\>$)/g, "")
+            let str = arg.replace(/(^<)|(>$)/g, "")
             const argArr = str.split("=")
             if (argArr.length === 2) {
                 defaultValue[argArr[0]] = argArr[1]

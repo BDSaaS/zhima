@@ -5,6 +5,11 @@ interface IObject {
 import Exception from "../Libs/Exception";
 import Lib from "../Libs/Lib";
 
+interface IContainer<T> {
+    instance: IContainer<T>
+    // instances: Record<string, IContainer>
+}
+
 /**
  * Class Container
  * 容器类
@@ -12,9 +17,9 @@ import Lib from "../Libs/Lib";
  */
 export default class Container {
     // instance 实例
-    protected static instance: object = null
+    protected static instance: T = null
     // instance 实例集
-    protected instances: Record<string, any> = {}
+    protected instances = {}
     // bind 绑定集
     protected bindings: Record<string, any> = {}
     // alias 别名集
@@ -77,19 +82,19 @@ export default class Container {
         return executor
     }
 
-    /**
-     * instance 实例
-     * @param {String} abstract
-     * @param instance
-     */
-    instance(abstract: string, instance) {
-        // 存在标记
-        const has = this.has(abstract)
-        if (has) {
-            delete this.instances[abstract]
-        }
-        this.instances[abstract] = instance
-    }
+    // /**
+    //  * instance 实例
+    //  * @param {String} abstract
+    //  * @param instance
+    //  */
+    // instance(abstract: string, instance) {
+    //     // 存在标记
+    //     const has = this.has(abstract)
+    //     if (has) {
+    //         delete this.instances[abstract]
+    //     }
+    //     this.instances[abstract] = instance
+    // }
 
     /**
      * makeClass 创建类
@@ -146,7 +151,7 @@ export default class Container {
      * getAlias 获取别名
      * @param abstract
      */
-    getAlias(abstract) {
+    getAlias(abstract: string) {
         const alias = this.aliases[abstract]
         return alias ? alias : abstract
     }
@@ -155,7 +160,7 @@ export default class Container {
      * get 获取实例
      * @param abstract
      */
-    public get(abstract) {
+    public get(abstract: string) {
         if (!this.has(abstract)) {
             throw new Exception('Container Error', 'The abstract does not exist')
         }
@@ -167,7 +172,7 @@ export default class Container {
      * @param abstract
      * @param concrete
      */
-    public singleton(abstract, concrete): void {
+    public singleton(abstract: string, concrete): void {
         this.bind(abstract, concrete)
     }
 
@@ -175,7 +180,7 @@ export default class Container {
      * setInstance 设置实例
      * @param {Record<string, any>} instance
      */
-    public setInstance(instance: object): void {
+    public setInstance<T>(instance: T): void {
         Container.instance = instance;
     }
 
