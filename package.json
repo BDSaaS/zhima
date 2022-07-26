@@ -1,8 +1,8 @@
 {
-  "name": "zhima",
+  "name": "pdd",
   "version": "1.0.0",
-  "description": "ZhiMa Framework",
-  "main": "dist/index.js",
+  "description": "PDD Framework",
+  "main": "framework/umd/index.js",
   "typings": "./index.d.ts",
   "repository": {
     "type": "git",
@@ -17,14 +17,17 @@
     "framework",
     "web framework",
     "Typescript framework",
-    "ZhiMa",
-    "芝麻"
+    "pdd",
+    "pdd framework"
   ],
   "license": "MIT",
   "scripts": {
+    "create": "tsc",
     "dev": "set NODE_ENV=developemnt&& rollup -c rollup.config.js -w",
     "build": "rollup -c rollup.config.js",
-    "eslint:fix": "./node_modules/.bin/eslint --fix ./"
+    "eslint:fix": "./node_modules/.bin/eslint --fix ./",
+    "publish": "npm publish --access=public",
+    "publish:yarn": "yarn publish --access=public"
   },
   "devDependencies": {
     "@babel/core": "^7.15.8",
@@ -32,7 +35,7 @@
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
     "core-js": "3",
-    "eslint": "^8.0.0",
+    "eslint": "^7.8.0",
     "rollup": "^2.58.0",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-commonjs": "^10.1.0",

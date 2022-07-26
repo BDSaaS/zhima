@@ -1,0 +1,69 @@
+export default class Lib {
+    /**
+     * typeOf 类型
+     * @param {*} value
+     */
+    static typeOf(value) {
+        return typeof value;
+    }
+    /**
+     * getTag 处理类型
+     * @param {*} value
+     */
+    static getTag(value) {
+        return Object.prototype.toString.call(value);
+    }
+    /**
+     * isFunction 是否函数
+     * @param {Function} value
+     * @return {Boolean}
+     */
+    static isFunction(value) {
+        return Lib.typeOf(value) === 'function' && Lib.getTag(value) === '[object Function]';
+    }
+    /**
+     * isString 是否字符串
+     * @param {String} value
+     * @return {Boolean}
+     */
+    static isString(value) {
+        return Lib.typeOf(value) === 'string' || (Lib.typeOf(value) === 'object' && value != null && !Array.isArray(value) && Lib.getTag(value) == '[object String]');
+    }
+    /**
+     * isObject 是否对象
+     * @param {Object} value
+     */
+    static isObject(value) {
+        return Lib.getTag(value) === '[object Object]';
+    }
+    /**
+     * isClass 是否类
+     * @param value
+     */
+    static isClass(value) {
+        // isFunction
+        if (!Lib.isFunction(value)) {
+            return false;
+        }
+        // Function toString
+        const str = value.toString();
+        // async function or arrow function
+        if (value.prototype === undefined)
+            return false;
+        // generator function or malformed definition
+        if (value.prototype.constructor !== value)
+            return false;
+        // ES6 class
+        if (str.slice(0, 5) == "class")
+            return true;
+        // has own prototype properties
+        if (Object.getOwnPropertyNames(value.prototype).length >= 2)
+            return true;
+        // anonymous function
+        if (/^function\s+\(|^function\s+anonymous\(/.test(str))
+            return false;
+        // Other
+        return false;
+    }
+}
+//# sourceMappingURL=Lib.js.map

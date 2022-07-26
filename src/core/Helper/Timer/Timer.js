@@ -296,3 +296,4 @@
 //         return instance
 //     }
 // }
+//# sourceMappingURL=Timer.js.map

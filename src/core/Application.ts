@@ -1,9 +1,13 @@
-import Container from "./Container/Container";
-import Exception from "./Libs/Exception";
-import Lib from "./Libs/Lib";
+import Container from "./Container/Container"
+import Exception from "./Libs/Exception"
+import Lib from "./Libs/Lib"
 
 interface Instance {
     getInstance: Instance
+}
+
+interface Instance2 {
+
 }
 
 /**
@@ -15,13 +19,13 @@ export default class Application extends Container {
     // VERSION
     private static VERSION = '0.0.1'
     // Adapters
-    protected adapters = new WeakMap()
+    private adapters = new WeakMap()
     // Providers
-    protected providers: any[] = []
+    private providers: any[] = []
     // Services
-    protected services: [] = []
+    private services: [] = []
     // Lifecycle step
-    protected step = 'init'
+    private step = 'init'
 
     /**
      * Get version 版本
@@ -58,19 +62,18 @@ export default class Application extends Container {
      * getProviders 获取
      * @protected
      */
-    protected getProviders(): any[] {
+    private static getProviders(): any[] {
         const providers = Application.getInstance().providers
         return Array.isArray(providers) && providers.length > 0 ? providers : []
     }
+
 
     /**
      * setProviders 设置
      * @param providers
      */
-    setProviders<T>(providers: T[]): void {
+    private setProviders<T>(providers: T[]): void {
         const instanceProviders = Application.getInstance().providers
-    :
-        T[]
         if (Array.isArray(instanceProviders)) {
             Application.getInstance().providers = instanceProviders.filter((instanceProvider) => {
                 const hasProvider = providers.find((provider) => {
@@ -78,7 +81,7 @@ export default class Application extends Container {
                 })
                 return !hasProvider
             })
-            Application.getInstance().providers = Application.getInstance().getProviders().concat(providers);
+            Application.getInstance().providers = Application.getInstance().getProviders().concat(providers)
         }
     }
 
@@ -111,9 +114,9 @@ export default class Application extends Container {
      * @param {Object} config
      * @param {String} name
      */
-    public setConfig(config: {}, name: string = '$config'): void {
+    public static setConfig(config: {}, name: string = '$config'): void {
         // singleton
-        this.singleton(name, config)
+        this.prototype.singleton(name, config)
     }
 
     /**
@@ -137,14 +140,14 @@ export default class Application extends Container {
      * @param adapter
      * @param payload
      */
-    public bindAdapter(adapter: any, payload?: {}) {
+    public static bindAdapter(adapter: any, payload?: {}) {
         // Application.getInstance().providers
         if (!Lib.isClass(adapter)) {
             throw new Exception('Adapter Error', 'The first argument must be a class')
         }
         const instance = payload ? new adapter(payload) : new adapter()
         // Insert
-        this.setAdapter(adapter, instance)
+        Application.setAdapter(adapter, instance)
     }
 
     /**
@@ -153,22 +156,22 @@ export default class Application extends Container {
      * @param instance
      * @protected
      */
-    protected setAdapter(adapter, instance: object) {
+    protected static setAdapter(adapter, instance: object) {
         if (!Lib.isClass(adapter)) {
             throw new Exception('Adapter Error', 'The first argument must be a class')
         }
-        if (Application.getInstance().getAdapter(adapter)) {
+        if (Application.getAdapter(adapter)) {
             throw new Exception('Adapter Error', 'The adapter is already bound')
         }
         Application.getInstance().adapters.set(adapter, instance)
     }
 
     /**
-     * getAdapter 获取
+     * static getAdapter 获取适配器
      * @param adapter
      * @return instance
      */
-    public getAdapter(adapter) {
+    public static getAdapter(adapter) {
         if (!Lib.isClass(adapter)) {
             throw new Exception('Adapter Error', 'The argument must be a class')
         }
@@ -184,6 +187,10 @@ export default class Application extends Container {
             instance = Application.instance = new Application()
         }
         return instance.proxyInstance()
+    }
+
+    public static getService(serviceName: string) {
+        return Application.getInstance().get(serviceName)
     }
 
     /**

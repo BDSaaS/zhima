@@ -1,30 +1,33 @@
-interface Person{
-    name: string
-    age: number
-}
+// interface Person{
+//     name: string
+//     age: number
+// }
+//
+// type Par<T> = {
+//     [K in keyof T]?: T[K]
+// }
+//
+// type PersonOptional = Partial<Person>
+// type PersonReadonly = Readonly<Person>
 
-type Par<T> = {
-    [K in keyof T]?: T[K]
-}
-
-type PersonOptional = Partial<Person>
-type PersonReadonly = Readonly<Person>
+type variableType = 'string' | 'number' | 'object' | 'undefined' | 'function' | 'boolean' | 'bigInt' | 'symbol'
 
 export default class Lib {
     /**
-     * typeOf 类型
-     * @param {*} value
+     * typeOf 判断变量类型
+     * @param value
+     * @param type
      */
-    public static typeOf(value: unknown): string {
-        return typeof value;
+    static typeOf(value: unknown, type: variableType): boolean {
+        return typeof value === type
     }
 
     /**
-     * getTag 处理类型
-     * @param {*} value
+     * getTag 判断变量类型
+     * @param value
      */
     public static getTag(value: unknown): string {
-        return Object.prototype.toString.call(value);
+        return Object.prototype.toString.call(value)
     }
 
     /**
@@ -33,7 +36,7 @@ export default class Lib {
      * @return {Boolean}
      */
     public static isFunction(value: unknown): value is Function {
-        return Lib.typeOf(value) === 'function' && Lib.getTag(value) === '[object Function]';
+        return Lib.typeOf(value, 'function') && Lib.getTag(value) === '[object Function]'
     }
 
     /**
@@ -42,7 +45,7 @@ export default class Lib {
      * @return {Boolean}
      */
     public static isString(value: unknown): value is string {
-        return Lib.typeOf(value) === 'string' || (Lib.typeOf(value) === 'object' && value != null && !Array.isArray(value) && Lib.getTag(value) == '[object String]');
+        return Lib.typeOf(value, 'string') || Lib.getTag(value) === '[object String]'
     }
 
     /**
@@ -50,7 +53,7 @@ export default class Lib {
      * @param {Object} value
      */
     public static isObject(value: unknown): value is Record<any, any> {
-        return Lib.getTag(value) === '[object Object]';
+        return Lib.getTag(value) === '[object Object]'
     }
 
     /**
@@ -60,22 +63,22 @@ export default class Lib {
     public static isClass(value: unknown): boolean {
         // isFunction
         if (!Lib.isFunction(value)) {
-            return false;
+            return false
         }
         // Function toString
-        const str = value.toString();
+        const str = value.toString()
 
         // async function or arrow function
-        if ((value as FunctionConstructor).prototype === undefined) return false;
+        if ((value as FunctionConstructor).prototype === undefined) return false
         // generator function or malformed definition
-        if ((value as FunctionConstructor).prototype.constructor !== value) return false;
+        if ((value as FunctionConstructor).prototype.constructor !== value) return false
         // ES6 class
-        if (str.slice(0, 5) == "class") return true;
+        if (str.slice(0, 5) == "class") return true
         // has own prototype properties
-        if (Object.getOwnPropertyNames((value as FunctionConstructor).prototype).length >= 2) return true;
+        if (Object.getOwnPropertyNames((value as FunctionConstructor).prototype).length >= 2) return true
         // anonymous function
-        if (/^function\s+\(|^function\s+anonymous\(/.test(str)) return false;
+        if (/^function\s+\(|^function\s+anonymous\(/.test(str)) return false
         // Other
-        return false;
+        return false
     }
 }
