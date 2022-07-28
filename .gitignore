@@ -113,3 +113,7 @@ utils.d.ts
 utils.d.ts.map
 utils.js
 utils.js.map
+
+.d.ts
+.js
+.js.map
