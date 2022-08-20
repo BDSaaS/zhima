@@ -9,7 +9,6 @@ export default abstract class Command {
   constructor(...payload: any[]) {
     this.payload = {...payload}
     this.$helper = Application.getService<IHelper>('$helper')
-    console.log('this.$helper', this.$helper)
   }
 
   public abstract handle(...args: any[]): Promise<any>

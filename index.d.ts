@@ -145,12 +145,6 @@ declare class Application extends Container {
     private adapters;
     private providers;
     /**
-     * Get version
-     * 版本
-     * @return {String} version
-     */
-    get version(): string;
-    /**
      * lifecycle
      * 生命周期
      * @private

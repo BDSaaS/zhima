@@ -44,7 +44,6 @@ export default class HttpProvider extends ServiceProvider {
 
     // Http Adapter 适配器
     const HTTP_ADAPTER_ = Application.getAdapter(HTTP_ADAPTER) as any
-    console.log('就是贵', HTTP_ADAPTER_)
 
     // Http Request Middleware 请求中间件
     const REQUEST_MIDDLEWARE = Application.getAppConfig('HTTP_CONFIG')['REQUEST_MIDDLEWARE']
@@ -72,7 +71,6 @@ export default class HttpProvider extends ServiceProvider {
         // 响应中间件
         RESPONSE_MIDDLEWARE,
       })
-      console.log('哈哈哈大队', obj)
       // return httpCreate;
       return obj
     })
