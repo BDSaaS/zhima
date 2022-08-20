@@ -21,7 +21,7 @@ export default defineConfig([
     {
         "input": path.resolve(
             __dirname,
-            "./src/core/index.ts"
+            "./src/index.ts"
         ),
         "output": {
             "file": path.resolve(
@@ -41,7 +41,7 @@ export default defineConfig([
     {
         "input": path.resolve(
             __dirname,
-            "./src/core/index.ts"
+            "./src/index.ts"
         ),
         "output": {
             "file": path.resolve(

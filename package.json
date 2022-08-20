@@ -2,8 +2,8 @@
   "name": "pdd",
   "version": "0.0.6",
   "description": "PDD Framework",
-  "main": "dist/umd/dz-transform.js",
-  "module": "dist/es/dz-transform.js",
+  "main": "dist/umd/pdd.js",
+  "module": "dist/es/pdd.js",
   "typings": "index.d.ts",
   "repository": {
     "type": "git",
