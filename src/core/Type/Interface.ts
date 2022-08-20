@@ -1,4 +1,4 @@
-import {UtilityClass, UtilityFunction, UtilityObject, UtilityWeakMap} from './utility'
+import {UtilityClass, UtilityFunction, UtilityObject} from './utility'
 
 export interface ILifecycle {
   created(): any
@@ -71,7 +71,7 @@ interface IService {
   '$helper': IHelper
 }
 
-export type TGetServiceType<T, K> = K extends keyof IService ? Pick<IService, K> : T
+// export type TGetServiceType<T, K> = K extends keyof IService ? Pick<IService, K> : T
 
 //
 type TResponseDataReturn = { statusCode: number, msg: string, data: any, timestamp: number }

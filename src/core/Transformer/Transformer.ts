@@ -6,6 +6,7 @@ import Lib from '../Libs/Lib'
  */
 export default abstract class Transformer {
   private readonly data: any
+  // @ts-ignore
   private payload: any
 
   /**

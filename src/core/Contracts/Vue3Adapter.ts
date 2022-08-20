@@ -60,7 +60,7 @@ interface AppInterface {
   provide<T>(key: InjectionKey<T> | symbol | string, value: T): this
 }
 
-type TVue3Adapter = typeof Vue3Adapter
+// type TVue3Adapter = typeof Vue3Adapter
 
 export default class Vue3Adapter {
   // Class property

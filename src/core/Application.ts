@@ -1,4 +1,5 @@
-import Config from '../../package.json'
+// @ts-ignore
+// import Config from '../../package.json'
 import Container from './Container/Container'
 import Exception from './Libs/Exception'
 import Lib from './Libs/Lib'
@@ -18,7 +19,7 @@ export default class Application extends Container {
   // Providers 服务提供者
   private providers: any[] = []
   // Services 服务 :todo 改造服务
-  private services: any[] = []
+  // private services: any[] = []
 
   /**
    * Get version
@@ -260,8 +261,8 @@ export default class Application extends Container {
     if (Lib.isFunction(callback)) {
       callback()
     }
-    console.log(`${'\n'} %c pdd %c ${Config.version} ${'\n'}`,
-      'color: #fadfa3; background: #030307; padding:5px 0;border-radius:3px 0 0 3px;',
-      'color:#000000;background: #ebd29a; padding:5px 0;border-radius:0 3px 3px 0;')
+    // console.log(`${'\n'} %c pdd %c ${Config.version} ${'\n'}`,
+    //   'color: #fadfa3; background: #030307; padding:5px 0;border-radius:3px 0 0 3px;',
+    //   'color:#000000;background: #ebd29a; padding:5px 0;border-radius:0 3px 3px 0;')
   }
 }
