@@ -44,7 +44,8 @@
     // 导入指定类型包
   },
   "include": [
-    "src/core/*"
+    "src/*"
     // 导入目录
-  ]
+  ],
+  "exclude": ["./lib","./lib/types"]
 }

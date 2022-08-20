@@ -4,7 +4,7 @@
   "description": "PDD Framework",
   "main": "dist/umd/dz-transform.js",
   "module": "dist/es/dz-transform.js",
-  "typings": "dist/es/index.d.ts",
+  "typings": "index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/BDSaaS/zhima.git"
