@@ -13,7 +13,7 @@ import {UtilityClass, UtilityFunction, UtilityObject, UtilityWeakMap} from './Ty
  */
 export default class Application extends Container {
 	// VERSION
-	private static VERSION = '0.0.8'
+	private static VERSION = '0.1.0'
 	// Adapters 适配器
 	private adapters: UtilityWeakMap = new WeakMap()
 	// Providers 服务提供者
@@ -188,7 +188,8 @@ export default class Application extends Container {
 			throw new Exception('Adapter Error', 'The first argument must be a class')
 		}
 		if (Application.getAdapter(adapter)) {
-			throw new Exception('Adapter Error', 'The adapter is already bound')
+			// throw new Exception('Adapter Error', 'The adapter is already bound')
+			console.warn('Adapter Warn', `The adapter ${adapter.name || ''} is already bound`)
 		}
 		this.adapters.set(adapter, instance)
 	}

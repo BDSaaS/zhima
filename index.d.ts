@@ -287,7 +287,7 @@ declare abstract class Command {
     protected payload: any;
     protected $helper: IHelper;
     constructor(...payload: any[]);
-    abstract handle(...args: any[]): Promise<any>;
+    abstract handle(...args: any[]): any | Promise<any> | void;
 }
 
 /**
