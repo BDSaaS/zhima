@@ -338,9 +338,10 @@ export default class HttpService extends Service {
 
 		// Carrying data
 		if (Object.keys(this._carryingData).length > 0) {
+			// 携带数据被载荷给覆盖
 			tfData.data = {
-				...tfData.data,
 				...this._carryingData,
+				...tfData.data,
 			}
 		}
 
