@@ -93,7 +93,8 @@ export default class HttpService extends Service {
 			callback()
 		}
 		// Setting response middleware 响应中间件
-		this._responseMiddleware = Lib.isFunction(RESPONSE_MIDDLEWARE) ? RESPONSE_MIDDLEWARE : () => {
+		this._responseMiddleware = Lib.isFunction(RESPONSE_MIDDLEWARE) ? RESPONSE_MIDDLEWARE : (response) => {
+			return response
 		}
 	}
 
@@ -219,7 +220,8 @@ export default class HttpService extends Service {
 			const response = await this._http.request()
 			// Run response middleware
 			try {
-				this._responseMiddleware(response)
+				const handle = this._responseMiddleware(response) as any
+				return !returnResponse ? handle.data : handle
 			} catch (error) {
 				console.warn('Response middleware Error', error)
 			}
