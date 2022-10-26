@@ -13,7 +13,7 @@ import {
 	THttpServiceParams,
 	IApplicationInstance, TRequestMethod, IHttpConfig,
 } from '../Type/Interface'
-import {UtilityFunction, UtilityObject} from '../Type/utility'
+import {UtilityObject} from '../Type/utility'
 import Application from '../Application'
 
 /**
@@ -36,10 +36,10 @@ export default class HttpService extends Service {
 	// $helper
 	$helper = null
 
-	_requestMiddleware: FunctionConstructor | ((callback: UtilityFunction) => void) = () => {
-	}
-	_responseMiddleware = (response: any) => {
-	}
+	// _requestMiddleware: FunctionConstructor | ((callback: UtilityFunction) => void) = () => {
+	// }
+	_requestMiddleware: (res: any) => any
+	_responseMiddleware: (res: any) => any
 
 	/**
 	 * _contentType Request type 请求类型
@@ -88,12 +88,12 @@ export default class HttpService extends Service {
 		this.setContentType(CONTENT_TYPE)
 		// Setting Data-carrying 携带数据
 		this.setDataCarry(DATA_CARRYING['REQUEST_HEADERS'], DATA_CARRYING['REQUEST_DATA'])
-		// Setting request middleware 请求中间件
-		this._requestMiddleware = Lib.isFunction(REQUEST_MIDDLEWARE) ? REQUEST_MIDDLEWARE : (callback: UtilityFunction) => {
-			callback()
+		// Setting request middleware 请求中间件 放弃回调方式
+		this._requestMiddleware = Lib.isFunction(REQUEST_MIDDLEWARE) ? REQUEST_MIDDLEWARE : (request: any) => {
+			return request
 		}
 		// Setting response middleware 响应中间件
-		this._responseMiddleware = Lib.isFunction(RESPONSE_MIDDLEWARE) ? RESPONSE_MIDDLEWARE : (response) => {
+		this._responseMiddleware = Lib.isFunction(RESPONSE_MIDDLEWARE) ? RESPONSE_MIDDLEWARE : (response: Promise<Response>) => {
 			return response
 		}
 	}
