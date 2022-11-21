@@ -67,13 +67,28 @@ export interface IContainer {
   // proxyInstance(): this
 }
 
-interface IService {
-  '$helper': IHelper
-}
+// interface IService {
+//   '$helper': IHelper
+// }
 
 // export type TGetServiceType<T, K> = K extends keyof IService ? Pick<IService, K> : T
 
-//
+// 请求方法
+export type TRequestMethod = 'POST' | 'GET' | 'PUT' | 'DELETE'
+// 请求类型
+export type TContentType = 'REQUEST_PAYLOAD' | 'FORM_DATA'
+// 数据携带方式
+export type TCarryData = 'REQUEST_HEADERS' | 'REQUEST_DATA'
+// Api配置
+export type TApiRoute = [string, TRequestMethod?, boolean?]
+
+export type IHttpSendConfig = {
+  host?: string
+  headers?: Record<string, any>
+  mode?: TContentType
+  responseData?: boolean
+}
+
 type TResponseDataReturn = { statusCode: number, msg: string, data: any, timestamp: number }
 
 interface IResponseReturn extends Response {
@@ -104,23 +119,7 @@ export interface IHelper {
    */
   http(api: string, data?: UtilityObject, handle?: (response: IResponseReturn) => void): Promise<TResponseDataReturn>
 
-  send(api: string, data?: UtilityObject, handle?: UtilityFunction, config?: IHelper): Promise<IResponseReturn>
-}
-
-// 请求方法
-export type TRequestMethod = 'POST' | 'GET' | 'PUT' | 'DELETE'
-//
-export type TContentType = 'REQUEST_PAYLOAD' | 'FORM_DATA'
-
-export type TCarryData = 'REQUEST_HEADERS' | 'REQUEST_DATA'
-
-export type TApiRoute = [string, TRequestMethod?, boolean?]
-
-export interface IHttpSendConfig {
-  host?: string
-  headers?: Record<string, any>
-  mode?: TContentType
-  responseData?: boolean
+  send(api: string, data?: UtilityObject, handle?: (response: IResponseReturn) => void, config?: IHttpSendConfig): Promise<IResponseReturn>
 }
 
 /**

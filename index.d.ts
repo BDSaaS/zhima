@@ -12,6 +12,14 @@ interface IContainer {
     setInstance<T>(instance: T): void;
     getInstance(): this;
 }
+declare type TRequestMethod = 'POST' | 'GET' | 'PUT' | 'DELETE';
+declare type TContentType = 'REQUEST_PAYLOAD' | 'FORM_DATA';
+declare type IHttpSendConfig = {
+    host?: string;
+    headers?: Record<string, any>;
+    mode?: TContentType;
+    responseData?: boolean;
+};
 declare type TResponseDataReturn = {
     statusCode: number;
     msg: string;
@@ -36,9 +44,8 @@ interface IHelper {
      * @param handle 处理Response的函数
      */
     http(api: string, data?: UtilityObject, handle?: (response: IResponseReturn) => void): Promise<TResponseDataReturn>;
-    send(api: string, data?: UtilityObject, handle?: UtilityFunction, config?: IHelper): Promise<IResponseReturn>;
+    send(api: string, data?: UtilityObject, handle?: (response: IResponseReturn) => void, config?: IHttpSendConfig): Promise<IResponseReturn>;
 }
-declare type TRequestMethod = 'POST' | 'GET' | 'PUT' | 'DELETE';
 /**
  * Adapter Interface
  */

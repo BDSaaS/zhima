@@ -1,6 +1,6 @@
 {
   "name": "pdd",
-  "version": "0.1.2",
+  "version": "0.1.7",
   "description": "PDD Framework",
   "main": "dist/umd/pdd.js",
   "module": "dist/es/pdd.js",

@@ -13,7 +13,7 @@ import {UtilityClass, UtilityFunction, UtilityObject, UtilityWeakMap} from './Ty
  */
 export default class Application extends Container {
 	// VERSION
-	private static VERSION = '0.1.2'
+	private static VERSION = '0.1.7'
 	// Adapters 适配器
 	private adapters: UtilityWeakMap = new WeakMap()
 	// Providers 服务提供者
@@ -40,6 +40,9 @@ export default class Application extends Container {
 			// unmounted
 			unmounted: () => {
 				// console.log('PDD Unmounted')
+				console.log(`${'\n'} %c pdd %c ${Application.VERSION} ${'\n'}`,
+					'color: #fadfa3; background: #030307; padding:5px 0;border-radius:3px 0 0 3px;',
+					'color:#000000;background: #ebd29a; padding:5px 0;border-radius:0 3px 3px 0;')
 			},
 		}
 	}
@@ -250,8 +253,5 @@ export default class Application extends Container {
 		if (Lib.isFunction(callback)) {
 			callback()
 		}
-		console.log(`${'\n'} %c pdd %c ${Application.VERSION} ${'\n'}`,
-			'color: #fadfa3; background: #030307; padding:5px 0;border-radius:3px 0 0 3px;',
-			'color:#000000;background: #ebd29a; padding:5px 0;border-radius:0 3px 3px 0;')
 	}
 }

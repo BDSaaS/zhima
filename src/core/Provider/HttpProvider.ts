@@ -54,7 +54,8 @@ export default class HttpProvider extends ServiceProvider {
 		// Singleton register
 		this.app.singleton('$request', () => {
 			// Http service
-			const obj = new HttpService(this.app, {
+			// return httpCreate;
+			return new HttpService(this.app, {
 				HTTP_ADAPTER_,
 				// 请求别名关联具体请求地址、请求方法、请求凭据携带状况
 				HTTP_API,
@@ -71,8 +72,6 @@ export default class HttpProvider extends ServiceProvider {
 				// 响应中间件
 				RESPONSE_MIDDLEWARE,
 			})
-			// return httpCreate;
-			return obj
 		})
 	}
 
