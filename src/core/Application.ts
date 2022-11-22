@@ -13,7 +13,7 @@ import {UtilityClass, UtilityFunction, UtilityObject, UtilityWeakMap} from './Ty
  */
 export default class Application extends Container {
 	// VERSION
-	private static VERSION = '0.1.7'
+	private static VERSION = '0.1.8'
 	// Adapters 适配器
 	private adapters: UtilityWeakMap = new WeakMap()
 	// Providers 服务提供者

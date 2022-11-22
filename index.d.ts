@@ -297,6 +297,7 @@ declare abstract class Command {
     abstract handle(...args: any[]): any | Promise<any> | void;
 }
 
+declare type Callback = (item: Record<any, any>, index?: number) => Record<any, any>;
 /**
  * Class Transformer 转换器
  * NewTransformer extends Transformer -> constructor(){super(data,payload)}
@@ -310,7 +311,7 @@ declare abstract class Transformer {
      * @param {*} payload 携带的载荷
      * @returns
      */
-    constructor(data: any, payload?: unknown);
+    protected constructor(data: any, payload?: unknown);
     /**
      * Method transform
      * 转换方法
@@ -324,7 +325,7 @@ declare abstract class Transformer {
      * 创建新数据
      * @return {Array/Object|String|Number|*}
      */
-    create(): any;
+    create(callback: Callback): any;
     /**
      * 格式化数字
      * @param {String|Number} number 待处理数字
